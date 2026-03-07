@@ -1,4 +1,4 @@
-import { initBeamsBackground } from './beams.js';
+import { initBeamsBackground } from '/beams.js';
 
 // Initialize WebGL Beams Background immediately
 initBeamsBackground('beams-canvas-container', {
