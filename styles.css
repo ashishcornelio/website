@@ -1,0 +1,322 @@
+:root {
+    --bg-color: #030305;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(20, 20, 25, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --primary: #6366f1;
+    --secondary: #8b5cf6;
+    --glow: #d946ef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Aurora Background Animation --- */
+.aurora-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: #020008;
+    /* Deeper space background */
+}
+
+.aurora-bg::before,
+.aurora-bg::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(217, 70, 239, 0.4), transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.4), transparent 50%);
+    filter: blur(60px);
+    animation: aurora 15s ease-in-out infinite alternate;
+}
+
+.aurora-bg::after {
+    animation-direction: alternate-reverse;
+    animation-duration: 20s;
+    background: radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.3), transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.35), transparent 50%);
+}
+
+@keyframes aurora {
+    0% {
+        transform: rotate(0deg) scale(1) translate(0, 0);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.3) translate(-5%, 5%);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1.1) translate(5%, -5%);
+    }
+}
+
+/* --- Layout --- */
+.header {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    position: relative;
+    z-index: 10;
+}
+
+.header h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.header p {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    flex-grow: 1;
+}
+
+/* --- Projects Grid --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    padding-bottom: 4rem;
+}
+
+@media (min-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- Project Card (Interactive Shape Blur Hover) --- */
+.project-card {
+    position: relative;
+    border-radius: 28px;
+    background: #0a0a0c;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+/* Inner container to hold card content and hide overflowing parts of the image */
+.card-inner {
+    position: absolute;
+    top: 2px;
+    /* Leaves a 2px gap for the border blur to shine through */
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: #0a0a0c;
+    border-radius: 26px;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Base border layer */
+.project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    /* Subtle default border */
+    z-index: 0;
+}
+
+/* The Animated Shape Blur that follows mouse globally */
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    /* Increased to make the glowing border thicker */
+    border-radius: 34px;
+    /* Matches the larger inset */
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+            rgba(255, 255, 255, 1),
+            /* Solid bright core */
+            transparent 55%);
+    opacity: var(--glow-opacity, 0);
+    /* Always visible to track mouse globally */
+    filter: blur(20px);
+    /* Lowered slightly to make the light more dense/thick at the edge */
+    z-index: -1;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Image Wrapper */
+.card-image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: 26px;
+}
+
+.project-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 26px;
+    transition: filter 0.6s ease;
+}
+
+.project-card:hover .project-img {
+    filter: brightness(0.6);
+}
+
+/* Info Panel (Animated Nav Component) */
+.card-info-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 60%, transparent 100%);
+    z-index: 4;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    transform: translateY(60%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.project-card:hover .card-info-panel {
+    transform: translateY(0);
+}
+
+.project-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #fff;
+    transform: translateY(-10px);
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-title {
+    transform: translateY(0);
+}
+
+.project-creators {
+    font-size: 0.875rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+}
+
+.project-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
+}
+
+.card-links {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+}
+
+.project-card:hover .project-creators,
+.project-card:hover .project-desc,
+.project-card:hover .card-links {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-github {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-github:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-live {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-live:hover {
+    background: var(--secondary);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
+}
