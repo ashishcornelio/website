@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <div class="aurora-bg"></div>
+    <!-- <div class="aurora-bg"></div> -->
+    <div id="beams-canvas-container" class="beams-container"></div>
 
     <header class="header">
         <h1>SangamOne Connected Services</h1>
@@ -98,7 +99,16 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <!-- Import Map for Three.js -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

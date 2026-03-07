@@ -1,4 +1,19 @@
+import { initBeamsBackground } from './beams.js';
+
+// Initialize WebGL Beams Background immediately
+initBeamsBackground('beams-canvas-container', {
+    beamWidth: 3,
+    beamHeight: 30,
+    beamNumber: 20,
+    lightColor: '#ffffff',
+    speed: 2,
+    noiseIntensity: 1.75,
+    scale: 0.2,
+    rotation: 30
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+
     // Advanced hover effect: 3D tilt & Proximity Mouse Tracking for Shape Blur
     const cards = document.querySelectorAll('.project-card');
 
