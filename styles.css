@@ -345,3 +345,26 @@ body {
     background: var(--secondary);
     box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
 }
+
+/* Mobile Compatibility: Show info panels by default without hover */
+@media (max-width: 768px) {
+    .project-img {
+        filter: brightness(0.6);
+    }
+    
+    .card-info-panel {
+        transform: translateY(0);
+    }
+    
+    .project-title {
+        transform: translateY(0);
+    }
+    
+    .project-creators,
+    .project-desc,
+    .card-links {
+        opacity: 1;
+        transform: translateY(0);
+        transition: none;
+    }
+}
