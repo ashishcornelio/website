@@ -17,15 +17,37 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    background-color: var(--bg-color);
     color: var(--text-main);
+    /* Remove background-color here so the .beams-container underneath shows through */
+    background-color: transparent;
     overflow-x: hidden;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* --- Aurora Background Animation --- */
+/* --- Beams Background Container --- */
+.beams-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -999;
+    /* Deepest layer */
+    overflow: hidden;
+    background-color: #030305;
+    /* Fallback matching the Three.js scene background */
+}
+
+.beams-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Aurora Background Animation (Keeping as comment just in case) --- */
+/*
 .aurora-bg {
     position: fixed;
     top: 0;
@@ -35,7 +57,6 @@ body {
     z-index: -1;
     overflow: hidden;
     background: #020008;
-    /* Deeper space background */
 }
 
 .aurora-bg::before,
@@ -73,6 +94,7 @@ body {
         transform: rotate(360deg) scale(1.1) translate(5%, -5%);
     }
 }
+*/
 
 /* --- Layout --- */
 .header {
@@ -131,7 +153,8 @@ body {
 .project-card {
     position: relative;
     border-radius: 28px;
-    background: #0a0a0c;
+    background: rgba(10, 10, 12, 0.2);
+    /* Much more transparent */
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
@@ -149,10 +172,12 @@ body {
     left: 2px;
     right: 2px;
     bottom: 2px;
-    background: #0a0a0c;
+    background: rgba(10, 10, 12, 0.6);
+    /* Translucent */
     border-radius: 26px;
     z-index: 2;
     overflow: hidden;
+    /* Important so children don't bleed out */
     display: flex;
     flex-direction: column;
 }
@@ -224,7 +249,7 @@ body {
     left: 0;
     width: 100%;
     padding: 2rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 60%, transparent 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
     z-index: 4;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
