@@ -1,4 +1,8 @@
+import { initBeamsBackground } from './beams.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    initBeamsBackground('beams-canvas-container', { rotation: -45 });
+
 
     // Advanced hover effect: 3D tilt & Proximity Mouse Tracking for Shape Blur
     const cards = document.querySelectorAll('.project-card');
