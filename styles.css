@@ -238,7 +238,9 @@ body {
     transition: filter 0.6s ease;
 }
 
-.project-card:hover .project-img {
+.project-card:hover .project-img,
+.project-card:active .project-img,
+.project-card:focus .project-img {
     filter: brightness(0.6);
 }
 
@@ -261,7 +263,9 @@ body {
     height: 100%;
 }
 
-.project-card:hover .card-info-panel {
+.project-card:hover .card-info-panel,
+.project-card:active .card-info-panel,
+.project-card:focus .card-info-panel {
     transform: translateY(0);
 }
 
@@ -270,11 +274,15 @@ body {
     font-weight: 600;
     margin-bottom: 0.25rem;
     color: #fff;
-    transform: translateY(-10px);
-    transition: transform 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.project-card:hover .project-title {
+.project-card:hover .project-title,
+.project-card:active .project-title,
+.project-card:focus .project-title {
+    opacity: 1;
     transform: translateY(0);
 }
 
@@ -307,8 +315,14 @@ body {
 }
 
 .project-card:hover .project-creators,
+.project-card:active .project-creators,
+.project-card:focus .project-creators,
 .project-card:hover .project-desc,
-.project-card:hover .card-links {
+.project-card:active .project-desc,
+.project-card:focus .project-desc,
+.project-card:hover .card-links,
+.project-card:active .card-links,
+.project-card:focus .card-links {
     opacity: 1;
     transform: translateY(0);
 }
@@ -346,25 +360,4 @@ body {
     box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
 }
 
-/* Mobile Compatibility: Show info panels by default without hover */
-@media (max-width: 768px) {
-    .project-img {
-        filter: brightness(0.6);
-    }
-    
-    .card-info-panel {
-        transform: translateY(0);
-    }
-    
-    .project-title {
-        transform: translateY(0);
-    }
-    
-    .project-creators,
-    .project-desc,
-    .card-links {
-        opacity: 1;
-        transform: translateY(0);
-        transition: none;
-    }
-}
+/* Mobile Compatibility removed to enforce tap-to-hover behavior */
